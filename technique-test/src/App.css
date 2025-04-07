@@ -1,0 +1,23 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 0 auto;
+    font-family: system-ui;
+}
+
+section {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+section img {
+    max-width: 320px;
+    height: auto;
+}
+
+p{
+    display: flex;
+}
