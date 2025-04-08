@@ -8,12 +8,7 @@ export function App () {
   const [fact, setFact] = useState()
   const [imageUrl, setImageUrl] = useState()
 
-  // IMPORTANTE al escribir el useEffect, siempre escribir en la función, primero los [], ya que si se olvida, se tendrá un loop infinito.
-  // entonces quedaría: useEffect(()=>{},[])
-  
-  // Lo ideal es que un useEffect tenga solamente una responsabilidad
-  // Este useEffect es para recuperar la cita al cargar la página
-  useEffect(() => {
+  const getRandomFact = () => {
     fetch(CAT_ENDPOINT_RANDOM_FACT)
       .then(res => res.json())
       // el data devuelve todo el objeto (todo el texto que se muestra al acceder al link de la API) y en data accedemos al "fact"
@@ -21,7 +16,14 @@ export function App () {
         const { fact } = data
         setFact(fact)
       })
-  }, [])
+  }
+
+  // IMPORTANTE al escribir el useEffect, siempre escribir en la función, primero los [], ya que si se olvida, se tendrá un loop infinito.
+  // entonces quedaría: useEffect(()=>{},[])
+  
+  // Lo ideal es que un useEffect tenga solamente una responsabilidad
+  // Este useEffect es para recuperar la cita al cargar la página
+  useEffect(getRandomFact, [])
 
   // useEffect para recuperar la imagen cada vez que tenemos una vita nueva
   useEffect(() => {
@@ -39,13 +41,17 @@ export function App () {
       })
   }, [fact])
 
+  const handleClick = () => {
+    getRandomFact()
+  }
+
   return (
     <main>
       <h1>App de Gatos</h1>
       <section>
         {fact && <p>{fact}</p>} {/* esto es un renderizado condicional */}
       </section>
-      
+      <button onClick={handleClick}> Get new fact </button>      
       {imageUrl && <img src={imageUrl} alt={`Image extracted using the first three words for ${fact}`} />}    
       
     </main>
